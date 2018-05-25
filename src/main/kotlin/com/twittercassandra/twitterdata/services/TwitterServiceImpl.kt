@@ -29,19 +29,17 @@ open class TwitterServiceImpl:TwitterService{
 
         val parsedMessage = JSON.readValue(tweetString, String::class.java)
         val tweet = gson.fromJson(parsedMessage, Tweet::class.java)
-        val list=tweet.result.statuses
+        val list=tweet.statuses
 
 
         for ( f in list){
-            logger.info("$f.coordinates")
 
-           // logger.info("${f.user}")
-           // logger.info("${f.place}")
-            //logger.info("term: ${tweet.term} geo:${f.geo} Coordinates:${f.coordinates} address:${f.place?.full_name} Country:${f.place?.country} Retweets Number: ${f.retweet_count} text: ${f.text}")// Exact address:${f.place?.full_name},Exact address:${f.place?.country} ")
 
-            val tweet2= TweetByTerm(tweet.term, f.user?.id, f.id,f.text,f.retweet_count,f.place?.full_name, f.place?.country )
-            tweetRepository.save(tweet2)
-          logger.info("your tweets have been saved successfully ")
+             logger.info("term: ${tweet.term} geo:${f.geo} Coordinates:${f.coordinates} address:${f.place?.full_name} Country:${f.place?.country} Retweets Number: ${f.retweet_count} text: ${f.text}")// Exact address:${f.place?.full_name},Exact address:${f.place?.country} ")
+
+             val tweet2= TweetByTerm(tweet.term, f.user?.id, f.id,f.text,f.retweet_count,f.place?.full_name, f.place?.country )
+             tweetRepository.save(tweet2)
+            logger.info("your tweets have been saved successfully ")
         }
 
 
